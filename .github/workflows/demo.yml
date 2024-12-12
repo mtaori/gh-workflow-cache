@@ -1,0 +1,46 @@
+name: deploye websitte
+on: 
+    push:
+        branches:
+            - main
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Get code
+              uses: actions/checkout@v4
+            - name: Install dependencies
+              run: npm ci
+            - name: lint code
+              run: npm run link
+            - name: test code
+              run: npm run test
+    build:
+        needs: test
+        runs-on: ubuntu-latest
+        steps: 
+            - name: Get code
+              uses: actions/checkout@v3
+            - name: Install dependencies
+              run: npm ci
+            - name: Buid website
+              run: npm run build
+            - name: upload artifacts # Here use to upload artifact in ci/cd pipeline
+              uses: actions/upload-artifact@v4 
+              with:
+                name: dist-files
+                path: | 
+                    dist
+                    package.json
+    deploy:
+        needs: build
+        runs-on: ubuntu-latest
+        steps: 
+            - name: Deploy
+              run: echo "deploying"
+            - name: Get artifacts
+              uses: actions/download-artifact@v4 #here we download the artifact
+              with:
+                name: dist-files
+            - name: outputs contents
+              run: ls
