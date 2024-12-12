@@ -29,7 +29,7 @@ jobs:
               run: npm run build
             - name: Publish js filename
               id: publish #id to call in outputs field
-              run: find dist/assets/*.js -type f -execdir echo 'abc={}' >> $GITHUB_OUTPUT ';' #output name of your choice
+              run: find firstproject/dist/assets/*.js -type f -execdir echo 'abc={}' >> $GITHUB_OUTPUT ';' #output name of your choice
             - name: upload artifacts # Here use to upload artifact in ci/cd pipeline
               uses: actions/upload-artifact@v4 
               with:
