@@ -12,7 +12,7 @@ jobs:
             - name: Install dependencies
               run: npm ci
             - name: lint code
-              run: npm run link
+              run: npm run lint
             - name: test code
               run: npm run test
     build:
